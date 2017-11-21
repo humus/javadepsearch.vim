@@ -1,0 +1,27 @@
+Before:
+  call javadepsearch#set_mode_test(1)
+After:
+  call javadepsearch#set_mode_test(0)
+Given:
+  
+Execute:
+  let result=javadepsearch#search('org.mybatis', 'mybatis-spring')
+Execute:
+  call setline(1, result)
+  AssertNotEqual getline(1), ''
+
+Given:
+  
+Execute:
+  call javadepsearch#set_entries([{'id': 'org.mybatis:mybatis-spring'}, {'id': 'commons-collections:commons-collections'}])
+  let current_list = javadepsearch#define_found_artifacts()
+  call setline(1, current_list)
+Expect:
+  org.mybatis:mybatis-spring
+  commons-collections:commons-collections
+
+Given:
+  
+Execute:
+  call javadepsearch#set_mode_test(0)
+  call javadepsearch#search('org.hibernate', 'h*core')

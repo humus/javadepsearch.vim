@@ -1,0 +1,28 @@
+javadepsearch.vim A plugin to search on maven central repo from inside vim *Requires python 3
+
+Author: Roberto B.
+Licence: Same term as Vim itself (see |licence|)
+
+INTRODUCTION                                          *javadepsearch*
+This plugin is being made to stop switching between vim and the brwser when
+searching for a specific version of a dependency on a java project. It is
+developed with maven in mind, but there should be no problem on using gradle
+instead.
+
+COMMANDS                                          *javadepsearch-commands*
+                                                  *javadepsearch-DepSearch*
+:DepSearch                      This is the starting point for use of the
+                                plugin. By invoking this command, the plugin
+                                will create zoom current buffer, create a split
+                                and populate the new buffer with the matching
+                                artifacts for your query, takes two parameters,
+                                the group Id and the artifact Id
+
+WINDOWS                                           *javadepsearch-windows*
+After running DepSearch and finding at least one result, a new window is open to
+select the artifact that will be used on the build tool. This window is a
+readonly vim buffer which higlights the current line to give feed back to select
+an artifact. Once you select the articat, the contents of the window are
+replaced to show the available versions of the artifact with its maven
+coordinates and to select it by hitting enter. Once you hit enter, the new
+window is closed and the previous layout should be restored
