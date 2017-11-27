@@ -43,6 +43,25 @@ fun! javadepsearch#set_mode_test(mode) "{{{
   let s:mode_tests=a:mode
 endfunction "}}}
 
+fun! javadepsearch#extract_versions(str_xml) "{{{
+  python3 << EOF
+import vim
+import re
+from lxml import etree
+
+str_xml=vim.eval('a:str_xml')
+str_xml=re.sub(r'<\?xml[^?]+\?>', '', str_xml)
+doc = etree.fromstring(str_xml)
+result = doc.xpath("/metadata/versioning/versions/version/text()")
+vim.command("let list_of_versions = []")
+for element in result:
+  vim.command("call add(list_of_versions, '%s')" % element)
+EOF
+  return list_of_versions
+endfunction "}}}
+
+" This code is used only with testing purposes, it should only be modified
+" to add edge cases to test or if search api changes in the future
 fun! javadepsearch#fake_python_dict() "{{{
   return {
 \  "spellcheck": { "suggestions": [] },
